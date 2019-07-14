@@ -4,7 +4,7 @@ This project is an automatic system to detect wild fires and send an alarm to th
 
 ### Setting up a Rapberry Pi
 
-Check out [this tutorial](https://geekytheory.com/tutorial-raspberry-pi-1-el-primer-encendido) to get your Raspberry Pi up and running, and [this tutorial](https://weworkweplay.com/play/automatically-connect-a-raspberry-pi-to-a-wifi-network/) to enable wifi connection from the get go (just add the wpa_supplicant.conf file with the network credentials).
+Check out [this tutorial](https://geekytheory.com/tutorial-raspberry-pi-1-el-primer-encendido) to get your Raspberry Pi up and running, and [this tutorial](https://weworkweplay.com/play/automatically-connect-a-raspberry-pi-to-a-wifi-network/) to enable wifi connection from the get go (just add the wpa_supplicant.conf file with the network credentials, check out this file in the configs folder).
 
 To enable ssh create a file named ssh (without extension) at the root of the unit (i.e. touch /Volumes/boot/ssh).
 
