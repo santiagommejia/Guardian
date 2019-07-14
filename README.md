@@ -44,3 +44,24 @@ Create a gcloud project as [seen here](https://cloud.google.com/resource-manager
 Install the gcloud sdk and init as [described here](https://cloud.google.com/sdk/install)
 Authenticate to gcloud `gcloud auth login` and set your project id `gcloud config set project <your_project_id>`.
 You can test your installation by copying a file to your bucket like this: `gsutil cp <path_to_file> <bucket_name>`, [reference here](https://cloud.google.com/storage/docs/gsutil/commands/cp).
+
+### Firebase Configuration
+
+Create a new firebase project **from the gcloud project you've already created**, this means that when you're creating a new firebase project you should select your gcloud project under the 'project name' field, this will allow you to use the `gsutil cp` command and copy files to your **firebase bucket**, this is important because the cloud functions will listen for changes in that bucket.
+
+Init Firestore Database, Storage and Functions.
+
+Set your Storage rules to:
+```
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow write: if request.auth != null;
+      allow read;
+    }
+  }
+}
+```
+This will allow the photo download url generated in the cloud functions to be valid.
+
