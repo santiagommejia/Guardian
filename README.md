@@ -32,9 +32,9 @@ Sync your time with the internet with `sudo timedatectl set-timezone <timezone>`
 
 Check out the **Register a cronjob** section to init fire-catcher.
 
-##### Register a cronjob
+#### Register a cronjob
 
-Register a cronjob to execute the script every minute, open the crontab with `crontab -e` and a this to the bottom of the file `* * * * * python /path/to/script/main_fire_catcher.py` to run the program every minute, if you want to modify the frequency take a look at the [reference here](https://www.cyberciti.biz/faq/how-do-i-add-jobs-to-cron-under-linux-or-unix-oses/).
+Register a cronjob to execute the script every minute, open the crontab with `crontab -e` and add this to the bottom of the file `* * * * * python /path/to/script/main_fire_catcher.py` to run the program every minute, if you want to modify the frequency take a look at the [reference here](https://www.cyberciti.biz/faq/how-do-i-add-jobs-to-cron-under-linux-or-unix-oses/).
 You should also configure the clean script `0 0 * * * ./path/to/script/clean_memory.sh` to avoid memory overloading.
 
 
