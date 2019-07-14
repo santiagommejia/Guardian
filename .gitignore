@@ -2,3 +2,5 @@ functions/node_modules
 functions/lib
 functions/package-lock.json
 configs/config.json
+.DS_Store
+test_images/.DS_Store
