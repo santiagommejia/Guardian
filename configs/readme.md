@@ -1,4 +1,4 @@
-Configuration:
+### Configure your own paths:
 
 1. Change the name of the `config_copy.json` file to `config.json`.
 2. Replace your bucket in the `config.json` file.
