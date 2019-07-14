@@ -2,6 +2,13 @@
 
 This project is an automatic system to detect wild fires and send an alarm to the fireman department for early wild fire detection.
 
+This is accomplished by taking the following steps:
+1. Take an image with a Raspberry Pi (using a Raspberry Pi Camera module).
+2. Run a computer vision algorithm to detect changes between two consecutive images.
+3. If a fire is detected, the two images + the marked image are uploaded to a firebase storage bucket.
+4. A cloud function is triggered when an image is storaged in the bucket, with the metadata information some documents in the firestore database are set.
+5. (soon) A web page or an app can be set to listen for a change in alarm path set by the cloud function, when the alarm is triggered an alarm sounds in the fireman department.
+
 ### Setting up a Rapberry Pi
 
 Check out [this tutorial](https://geekytheory.com/tutorial-raspberry-pi-1-el-primer-encendido) to get your Raspberry Pi up and running, and [this tutorial](https://weworkweplay.com/play/automatically-connect-a-raspberry-pi-to-a-wifi-network/) to enable wifi connection from the get go (just add the wpa_supplicant.conf file with the network credentials, check out this file in the configs folder).
