@@ -1,6 +1,10 @@
+fire-catcher-web/node_modules
 functions/node_modules
 functions/lib
 functions/package-lock.json
 configs/config.json
 .DS_Store
 test_images/.DS_Store
+fire-catcher-web/src/environments/*
+fire-catcher-web/node_modules
+fire-catcher-web/e2e

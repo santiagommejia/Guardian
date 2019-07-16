@@ -1,0 +1,33 @@
+<div class="content">
+    <section class="form-gradient">
+        <mdb-card>
+          <div class="header pt-3 peach-gradient">
+            <div class="row d-flex justify-content-center">
+              <h3 class="white-text mb-3 pt-3 font-weight-bold">Fire Catcher</h3>
+            </div>
+          </div>
+          <mdb-card-body class="mx-4 mt-4">
+            <form [formGroup]="form">
+              <div class="md-form">
+                <input type="text" id="gradientFormEmailEx" formControlName="email" class="form-control" mdbInput>
+                <label for="gradientFormEmailEx">Tu correo</label>
+              </div>
+              <div class="md-form pb-1 pb-md-3">
+                <input type="password" id="gradientFormPasswordEx" formControlName="password" class="form-control" mdbInput>
+                <label for="gradientFormPasswordEx">Tu contraseña</label>
+                <p (click)="forgotPassword()" class="font-small grey-text d-flex justify-content-end">
+                  <a href="#" class="dark-grey-text ml-1 font-weight-bold">Olvidaste tu contraseña?</a>
+                </p>
+              </div>
+            </form>
+            <div class="row d-flex align-items-center mb-4">
+              <div class="col-md-1 col-md-5 d-flex align-items-start">
+                <div class="text-center">
+                  <button type="button" (click)="login()" mdbBtn color="grey" rounded="true" class="z-depth-1a waves-light" mdbWavesEffect>Ingresar</button>
+                </div>
+              </div>
+            </div>
+          </mdb-card-body>
+        </mdb-card>
+      </section>
+</div>
