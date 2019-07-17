@@ -1,1 +1,51 @@
-<p>monitor works!</p>
+<div class="nav-header">
+  <div class="header peach-gradient">
+    <div class="header-icon">
+      <img src="assets/flame64.png" alt="image">
+    </div>
+    <div class="header-title">
+      Fire Catcher
+    </div>
+  </div>
+</div>
+<div class="body" *ngIf="isActiveFireNow">
+  <div class="images">
+    <div class="top-images">
+      <div class="left-image">
+        <a href="{{images.previous}}" target="_blank">
+          <img class="img" src="{{images.previous}}" alt="previous_image">
+        </a>
+      </div>
+      <div class="right-image">
+        <a href="{{images.current}}" target="_blank">
+          <img class="img" src="{{images.current}}" alt="current_image">
+        </a>
+      </div>
+    </div>
+    <div class="bottom-images">
+      <a href="{{images.fire}}" target="_blank">
+        <img class="img" src="{{images.fire}}" alt="fire_image">
+      </a>
+    </div>
+  </div>
+  <div class="confirmation">
+    <div class="warning-box">
+      <div class="warning-time">
+        Ahora: {{timestamp | date:'mediumTime'}}
+      </div>
+      <div class="warning-title">
+        {{warningTitle}}
+      </div>
+      <div class="warning-confirm">
+        <div style="width: 50%; float: left; text-align: center;">
+            <button (click)="rejectAlarm()" type="button" mdbBtn color="grey" rounded="true" class="z-depth-1a waves-light"
+            mdbWavesEffect>Rechazar</button>
+        </div>
+        <div style="width: 50%; margin-left: 50%; text-align: center;">
+            <button (click)="acceptAlarm()" type="button" mdbBtn color="red" rounded="true" class="z-depth-1a waves-light"
+                mdbWavesEffect>Alarma</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -24,6 +24,12 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
+    // this.dummylogin();
+  }
+
+  async dummylogin() {
+    // const success = await this.authService.login('santiagommejia@gmail.com', 'firecatcher');
+    this.router.navigate(['monitor']);
   }
 
   async login() {
