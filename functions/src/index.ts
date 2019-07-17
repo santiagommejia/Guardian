@@ -29,8 +29,7 @@ async function updateAlarm(metadata: any, bucket: string, filePath: string) {
   const imgUrl1 = getImageUrl(bucket, metadata.previousimagebucketpath);
   const imgUrl2 = getImageUrl(bucket, metadata.currentimagebucketpath);
   const alarm = {
-    confirmed: false,
-    isActiveNow: true,
+    status: 'IN_REVIEW',
     fireStorage: filePath,
     previousStorage: metadata.previousimagebucketpath,
     currentStorage: metadata.currentimagebucketpath,

@@ -8,25 +8,47 @@
     </div>
   </div>
 </div>
-<div class="body" *ngIf="isActiveFireNow">
+<div class="body" *ngIf="status === '' || status === 'REJECTED'">
+  <!-- some other nice spinner type: ball-clip-rotate-multiple -->
+    <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="timer">
+      <br><br><br><br><br>
+      <p style="font-size: 24px; color: white">Escaneando, te avisaremos cuando se detecte un incendio...</p>
+    </ngx-spinner>
+</div>
+<div class="body" *ngIf="status === 'IN_REVIEW' || status === 'CONFIRMED'">
   <div class="images">
-    <div class="top-images">
-      <div class="left-image">
-        <a href="{{images.previous}}" target="_blank">
-          <img class="img" src="{{images.previous}}" alt="previous_image">
+    <ngb-carousel *ngIf="images">
+      <ng-template ngbSlide>
+        <span class="helper"></span>
+        <a href="{{images.previous.url}}" target="_blank">
+          <img class="img" src="{{images.previous.url}}" />
+          <div class="carousel-caption">
+            <h3>{{images.previous.timestamp | date:'mediumTime'}}</h3>
+            <p>Imagen Previa</p>
+          </div>
         </a>
-      </div>
-      <div class="right-image">
-        <a href="{{images.current}}" target="_blank">
-          <img class="img" src="{{images.current}}" alt="current_image">
+      </ng-template>
+      <ng-template ngbSlide>
+        <span class="helper"></span>
+        <a href="{{images.current.url}}" target="_blank">
+          <img class="img" src="{{images.current.url}}" alt="current_image">
+          <div class="carousel-caption">
+            <h3>{{images.current.timestamp | date:'mediumTime'}}</h3>
+            <p>Imagen Actual</p>
+          </div>
         </a>
-      </div>
-    </div>
-    <div class="bottom-images">
-      <a href="{{images.fire}}" target="_blank">
-        <img class="img" src="{{images.fire}}" alt="fire_image">
-      </a>
-    </div>
+      </ng-template>
+      <ng-template ngbSlide>
+        <span class="helper"></span>
+        <a href="{{images.fire.url}}" target="_blank">
+          <img class="img" src="{{images.fire.url}}" alt="fire_image">
+          <div class="carousel-caption">
+            <h3>{{images.fire.timestamp | date:'mediumTime'}}</h3>
+            <p>Incendio Detectado</p>
+          </div>
+        </a>
+      </ng-template>
+    </ngb-carousel>
   </div>
   <div class="confirmation">
     <div class="warning-box">
@@ -36,14 +58,20 @@
       <div class="warning-title">
         {{warningTitle}}
       </div>
-      <div class="warning-confirm">
+      <div class="warning-confirm" *ngIf="status === 'IN_REVIEW'">
         <div style="width: 50%; float: left; text-align: center;">
-            <button (click)="rejectAlarm()" type="button" mdbBtn color="grey" rounded="true" class="z-depth-1a waves-light"
-            mdbWavesEffect>Rechazar</button>
+          <button (click)="rejectAlarm()" type="button" mdbBtn color="grey" rounded="true"
+            class="z-depth-1a waves-light" mdbWavesEffect>Rechazar</button>
         </div>
         <div style="width: 50%; margin-left: 50%; text-align: center;">
-            <button (click)="acceptAlarm()" type="button" mdbBtn color="red" rounded="true" class="z-depth-1a waves-light"
-                mdbWavesEffect>Alarma</button>
+          <button (click)="acceptAlarm()" type="button" mdbBtn color="red" rounded="true" class="z-depth-1a waves-light"
+            mdbWavesEffect>Alarma</button>
+        </div>
+      </div>
+      <div class="warning-confirm" *ngIf="status === 'CONFIRMED'">
+        <div style="text-align: center;">
+          <button (click)="restore()" type="button" mdbBtn color="grey" rounded="true"
+            class="z-depth-1a waves-light" mdbWavesEffect>Restablecer</button>
         </div>
       </div>
     </div>

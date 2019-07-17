@@ -1,35 +1,56 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Alarm } from '../../shared/models/alarm';
+import { Image } from '../../shared/models/image';
+import { NgxSpinnerService } from 'ngx-spinner';
 import * as moment from 'moment';
-
+import * as firebase from 'firebase';
 @Component({
   selector: 'app-monitor',
   templateUrl: './monitor.component.html',
   styleUrls: ['./monitor.component.scss']
 })
-export class MonitorComponent implements OnInit {
+export class MonitorComponent {
 
   images = {
-    previous: '',
-    current: '',
-    fire: ''
+    previous: new Image(),
+    current: new Image(),
+    fire: new Image()
   };
-  isActiveFireNow = true;
+  status = '';
   timestamp = 0;
   warningTitle = '';
+  alarm = new Alarm();
+  audio = new Audio();
 
-  constructor() {
-    this.updateTimestamp();
-    const imgName = 'detectedFire/fc-1563069543.png';
-    const timestampImg = this.getTimestampFromImageName(imgName);
-    console.log('timestamp: ', timestampImg);
-    this.updateWarningTitle(timestampImg);
-    this.images.previous = 'https://firebasestorage.googleapis.com/v0/b/fire-catcher-242315.appspot.com/o/debugImages%2Ffc-1563069497.png?alt=media'; // tslint:disable-line
-    this.images.current = 'https://firebasestorage.googleapis.com/v0/b/fire-catcher-242315.appspot.com/o/debugImages%2Ffc-1563069543.png?alt=media'; // tslint:disable-line
-    this.images.fire = 'https://firebasestorage.googleapis.com/v0/b/fire-catcher-242315.appspot.com/o/detectedFire%2Ffc-1563069543.png?alt=media'; // tslint:disable-line
-
+  constructor(private spinner: NgxSpinnerService) {
+    this.listenAlarmTrigger();
   }
 
-  ngOnInit() {
+  listenAlarmTrigger() {
+    firebase.firestore().collection('alert').doc('status').onSnapshot(snapshot => {
+      this.updateTimestamp();
+      this.extractDataFromDocument(snapshot.data());
+    }, err => {
+      console.log(`Encountered error: ${err}`);
+    });
+  }
+
+  extractDataFromDocument(doc: any) {
+    this.updateStatus(doc.status);
+    if (doc.status === 'IN_REVIEW' || doc.status === 'CONFIRMED') {
+      this.alarm = Object.assign(new Alarm(), doc);
+      const fireTimestamp = this.getTimestampFromImageName(doc.fireStorage);
+      this.setImage('current', doc.currentUrl, doc.currentStorage);
+      this.setImage('fire', doc.fireUrl, doc.fireStorage);
+      this.setImage('previous', doc.previousUrl, doc.previousStorage);
+      this.updateWarningTitle(fireTimestamp);
+      this.soundAlarm('WARNING');
+    }
+  }
+
+  setImage(name: string, url: string, storage: string) {
+    this.images[name].url = url;
+    this.images[name].timestamp = this.getTimestampFromImageName(storage);
   }
 
   updateTimestamp() {
@@ -47,12 +68,54 @@ export class MonitorComponent implements OnInit {
     return parseInt(timestamp, 10);
   }
 
-  rejectAlarm() {
-    
+  async soundAlarm(type: string) {
+    if (type !== 'SILENT') {
+      const src = type === 'FIRE' ? '../../../assets/audio/woop-woop.mp3' : '../../../assets/audio/smoke-alarm.mp3';
+      this.audio.src = src;
+      this.audio.loop = true;
+      this.audio.play();
+    } else {
+      this.audio.pause();
+    }
   }
-  
-  acceptAlarm() {
 
+  rejectAlarm() {
+    this.updateStatus('');
+    this.updateFirestoreAlarm('REJECTED');
+    this.soundAlarm('SILENT');
+  }
+
+  acceptAlarm() {
+    this.updateStatus('CONFIRMED');
+    this.updateFirestoreAlarm('CONFIRMED');
+    this.soundAlarm('FIRE');
+  }
+
+  updateFirestoreAlarm(newStatus: string) {
+    const station = 'station-' + this.alarm.station;
+    const docId = this.alarm.timestamp.toString();
+    try {
+      Promise.all([
+        firebase.firestore().collection('alert').doc('status').update('status', newStatus),
+        firebase.firestore().collection(station).doc(docId).update('status', newStatus)
+      ]);
+    } catch (error) {
+      console.log('promise error:', error);
+    }
+  }
+
+  restore() {
+    this.updateStatus('');
+    this.soundAlarm('SILENT');
+  }
+
+  updateStatus(status: string) {
+    this.status = status;
+    if (status === '' || status === 'REJECTED') {
+      this.spinner.show();
+    } else {
+      this.spinner.hide();
+    }
   }
 
 }

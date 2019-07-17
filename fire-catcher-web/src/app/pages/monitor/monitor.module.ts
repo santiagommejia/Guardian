@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { MonitorRoutingModule } from './monitor.routing.module';
 import { MonitorComponent } from './monitor.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [MonitorComponent],
@@ -12,6 +14,8 @@ import { MonitorComponent } from './monitor.component';
     FormsModule,
     ReactiveFormsModule,
     MDBBootstrapModule,
+    NgbModule,
+    NgxSpinnerModule,
     MonitorRoutingModule
   ]
 })
