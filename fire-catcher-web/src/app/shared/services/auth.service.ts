@@ -7,7 +7,7 @@ export class AuthService {
 
   constructor(private router: Router) {}
 
-  private isLoggedIn = true;
+  private isLoggedIn = false;
 
   async login(email: string, password: string) {
     try {

@@ -1,5 +1,6 @@
 {
   "projects": {
-    "prod": "fire-catcher-242315"
+    "prod": "fire-catcher-242315",
+    "default": "fire-catcher-242315"
   }
 }

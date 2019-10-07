@@ -22,6 +22,28 @@ export const triggerAlarm = functions.storage.object().onFinalize(async (object)
   return ;
 });
 
+export const updateUser = functions.firestore.document('firefighter-alert/alert').onUpdate(async (change, context) => {
+      const alert = change.after.data();
+      console.log("alert: ", alert);
+      if (alert !== undefined) {
+        const squadTokens = await admin.firestore().collection('squad').doc(alert.squad).get();
+        console.log('squadTokens', squadTokens);
+        const payload = {
+          notification: {
+              title: 'Se ha confirmado un Incendio.',
+              body: 'Ingresa a la aplicación para ver mas detalles'
+          }
+        };
+        // squadTokens.forEach(token => {
+        //   admin.messaging().sendToDevice(token, payload)
+        // });
+        return ;
+      } else {
+        return ;
+      }
+    });
+
+
 async function updateAlarm(metadata: any, bucket: string, filePath: string) {
   const station = metadata.station;
   const timestamp = metadata.timestamp;

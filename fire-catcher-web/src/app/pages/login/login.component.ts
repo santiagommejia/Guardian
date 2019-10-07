@@ -11,8 +11,7 @@ import { AuthService } from '../../shared/services/auth.service';
 })
 export class LoginComponent {
 
-  // todo: actualizar regex email
-  readonly emailRegex: RegExp = new RegExp('/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'); // tslint:disable-line
+  readonly emailRegex: RegExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/); // tslint:disable-line
   form: FormGroup;
 
   constructor(
@@ -52,7 +51,6 @@ export class LoginComponent {
     const email = prompt('Introduce la dirección de correo.', currentEmail);
     if (email !== null) {
       const isValidEmail = this.emailRegex.test(email);
-      console.log('isvalidemail: ', isValidEmail);
       if (isValidEmail) {
         this.authService.sendPasswordResetEmail(email);
         alert('Se ha enviado un email para reestablecer la contraseña a ' + email + ', por favor revisa tu bandeja de entrada.');
