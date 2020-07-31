@@ -3,11 +3,11 @@
 This project is an automatic system to detect wild fires and send an alarm to the fire station for early wild fire detection.
 
 This is accomplished by taking the following steps:
-1. Take an image with a Raspberry Pi (using a Raspberry Pi Camera module).
-2. Run a computer vision algorithm to detect changes between two consecutive images.
-3. If a fire is detected, the two images + the marked image are uploaded to a firebase storage bucket.
-4. A cloud function is triggered when an image is storaged in the bucket, with the metadata information some documents in the firestore database are set.
-5. (soon) A web page or an app can be set to listen for a change in alarm path set by the cloud function, when the alarm is triggered an alarm sounds in the fireman department.
+1. Take a picture with a Raspberry Pi (using a Raspberry Pi Camera module).
+2. Run a computer vision algorithm to detect changes between two consecutive pictures.
+3. If a fire is detected, the two original pictures and the marked picture are uploaded to a firebase storage bucket.
+4. A cloud function is triggered when an image is storaged in the bucket, with the information in the image metada, the cloud functions update a document in the firestore database.
+5. A web page or an app can be set to listen for a change in the alarm path set by the cloud function, when this listener is triggered an alarm can sound in the fire station to alert the firemen.
 
 ### Setting up a Rapberry Pi
 
@@ -25,9 +25,9 @@ Check out the **Register a cronjob** section to init fire-catcher.
 
 #### Option 2 (Manual)
 
-Open a terminal inside your Raspberry Pi or connect over ssh, if you don't know what is the pi's ip you can check out [this tutorial](https://itsfoss.com/how-to-find-what-devices-are-connected-to-network-in-ubuntu/).
+Open a terminal inside your Raspberry Pi or connect over ssh, if you don't know what's the pi's IP address you can check out [this tutorial](https://itsfoss.com/how-to-find-what-devices-are-connected-to-network-in-ubuntu/).
 
-If you're running a headless raspbian distro install **python-picamera** `sudo apt-get install python-picamera`, if errors arise due to uninstalled dependencies install them with `sudo apt --fix-broken install`.
+If you're running a headless raspbian distro install **python-picamera** `sudo apt-get install python-picamera`, if errors pop up due to uninstalled dependencies install them with `sudo apt --fix-broken install`.
 
 Install opencv as [described here](https://robologs.net/2014/04/25/instalar-opencv-en-raspberry-pi-2/).
 
@@ -35,14 +35,14 @@ Install imutils with `sudo apt-get install python-pip` and `pip install imutils`
 
 Install **remote.it** (optional) to connect through ssh over the internet as [described here](https://docs.remote.it/platforms/quick-start-on-raspberry-pi/install-remote.it).
 
-Sync your time with the internet with `sudo timedatectl set-timezone <timezone>`, you can check the available timezones by running `sudo timedatectl list-timezones`, if you want to execute the time sync on start-up you can set a script to run on login as [seen here](https://raspberrypi.stackexchange.com/questions/8734/execute-script-on-start-up), and put this command in such script `<sudo_password> | sudo -S timedatectl set-timezone <timezone>`, remember to make the script executable `sudo chmod +x <script_name>`.
+Sync your time with the internet with `sudo timedatectl set-timezone <timezone>`, you can check the available timezones by running `sudo timedatectl list-timezones`, if you want to execute the time sync on start-up you can set a script to run on login as [seen here](https://raspberrypi.stackexchange.com/questions/8734/execute-script-on-start-up), and put this command in that script `<sudo_password> | sudo -S timedatectl set-timezone <timezone>`, remember to make the script executable `sudo chmod +x <script_name>`.
 
 Check out the **Register a cronjob** section to init fire-catcher.
 
 #### Register a cronjob
 
 Register a cronjob to execute the script every minute, open the crontab with `crontab -e` and add this to the bottom of the file `* * * * * python /path/to/script/main_fire_catcher.py` to run the program every minute, if you want to modify the frequency take a look at the [reference here](https://www.cyberciti.biz/faq/how-do-i-add-jobs-to-cron-under-linux-or-unix-oses/).
-You should also configure the clean script `0 0 * * * ./path/to/script/clean_memory.sh` to avoid memory overloading.
+You should also configure the clean script `0 0 * * * ./path/to/script/clean_memory.sh` to avoid memory overflow.
 
 
 ### Gcloud configuration
