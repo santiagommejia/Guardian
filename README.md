@@ -2,6 +2,8 @@
 
 This project is an automatic system to detect wild fires and send an alarm to the fire station for early wild fire detection.
 
+What it does: [Fire detection sample video](https://www.youtube.com/watch?v=7eNpAbALEys)
+
 This is accomplished by taking the following steps:
 1. Take a picture with a Raspberry Pi (using a Raspberry Pi Camera module).
 2. Run a computer vision algorithm to detect changes between two consecutive pictures.
