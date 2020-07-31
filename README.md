@@ -1,6 +1,6 @@
 # Guardian
 
-This project is an automatic system to detect wild fires and send an alarm to the fireman department for early wild fire detection.
+This project is an automatic system to detect wild fires and send an alarm to the fire station for early wild fire detection.
 
 This is accomplished by taking the following steps:
 1. Take an image with a Raspberry Pi (using a Raspberry Pi Camera module).
