@@ -1,4 +1,4 @@
-# fire-catcher
+# Guardian
 
 This project is an automatic system to detect wild fires and send an alarm to the fireman department for early wild fire detection.
 
