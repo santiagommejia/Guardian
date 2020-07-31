@@ -2,9 +2,6 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 admin.initializeApp();
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-
 // set storage permission to allow read: true
 export const triggerAlarm = functions.storage.object().onFinalize(async (object) => {
   const metadata = <any>object.metadata;

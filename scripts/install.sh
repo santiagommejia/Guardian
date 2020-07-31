@@ -17,7 +17,7 @@ ask() {
 
 # Install Script
 echo "********************************************************************************"
-echo "         Welcome to the installation program for fire-catcher!"
+echo "         Welcome to the installation script for fire-catcher!"
 echo "      Follow the instructions to install and configure this project."
 echo "********************************************************************************"
 echo
@@ -49,4 +49,4 @@ if ask "Do you want to see the full list of available timezones?"; then
 read -p "Introduce your timezone <continent>/<city>: " timezone
 sudo timedatectl set-timezone $timezone
 echo "Time synced."
-echo "$psswd | sudo -S timedatectl set-timezone $timezone" >> .bashrc # to do: verificar que este sincronizando el tiempo al hacer login 
+echo "$psswd | sudo -S timedatectl set-timezone $timezone" >> .bashrc # TODO: check that the time is being synced up at boot time
